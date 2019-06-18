@@ -18,11 +18,15 @@
     var formHandler = new FormHandler(FORM_SELECTOR);
 
     formHandler.addSubmitHandler(function(data) {
-        myTruck.createOrder(data);
-        checkList.addRow(data);
+        return myTruck.createOrder(data)
+            .then(function() {
+                checkList.addRow(data);
+            });
     });
 
     formHandler.addInputHandler(Validation.isCompanyEmail);
+
+    myTruck.printOrders(checkList.addRow.bind(checkList));
 
     console.log(formHandler);
   })(window);
