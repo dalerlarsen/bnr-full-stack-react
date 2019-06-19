@@ -1,23 +1,22 @@
 var http = require('http');
 var fs = require('fs');
+var zlib = require('zlib');
 var extract = require('./extract');
 var wss = require('./websockets-server');
 
-var handleError = function (err, res) {
-    res.writeHead(404);
-    res.end();
-};
+var Koa = require('koa');
+var app = new Koa();
 
-var server = http.createServer(function (req, res) {
+app.use(ctx => {
     console.log('Responding to a request.');
-
-    var filePath = extract(req.url);
-    fs.readFile(filePath, function (err, data) {
-        if (err) {
-            handleError(err, res);
-            return;
-        }
-        res.end(data);
-    });
+    var filePath = extract(ctx.request.url);
+    var stream = fs.createReadStream(filePath);
+    var gzipped = zlib.createGzip();
+    ctx.body = stream.pipe(gzipped);
+    ctx.response.set('Content-Encoding', 'gzip');
+    ctx.response.remove('Content-Type');
 });
+
+var server = http.createServer(app.callback());
+
 server.listen(3000);
