@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import './App.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const AppHeader = () => {
+    return React.createElement('h1', { className: 'app-header' }, 'Pongboard');
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const Game = () => {
+    return (
+        React.createElement('ul', {},
+            React.createElement('li', {}, 'Player1'),
+            React.createElement('li', {}, 'Player2'),
+        )
+    );
+};
+
+ReactDOM.render(
+    React.createElement('div', {},
+        React.createElement(AppHeader, {}, null),
+        React.createElement(Game, {}, null),
+    ),
+    document.getElementById('root'),
+);
