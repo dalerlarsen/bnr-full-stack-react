@@ -6,7 +6,7 @@ const Game = (props) => {
         <Player
             key={player.id}
             player={player}
-            updateScore={() => props.updateScore()}
+            updateScore={() => props.updateScore(player.id)}
         />
     ));
 
