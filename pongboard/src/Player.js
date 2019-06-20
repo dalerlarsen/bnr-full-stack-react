@@ -5,7 +5,11 @@ const Player = (props) => {
         <li>
             <span className="player-score">{props.player.score}</span>
             <span className="player-name">{props.player.name}</span>
-            <button onClick={props.updateScore}>+</button>
+            {
+                props.updateScore
+                    ? <button onClick={props.updateScore}>+</button>
+                    : null
+            }
         </li>
     )
 }
