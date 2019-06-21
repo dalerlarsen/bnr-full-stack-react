@@ -31,7 +31,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://pongboardapi.herokuapp.com/')
+        console.log('component mounted');
+        fetch('https://pongboardapiBAD.herokuapp.com/')
             .then(response => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -39,7 +40,12 @@ class App extends React.Component {
                     allGames: responseJson,
                 });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    isLoading: false,
+                })
+            });
     }
 
     updateScore(playerId) {
@@ -70,7 +76,7 @@ class App extends React.Component {
         if (this.state.isLoading) {
             return (
                 <p>Loading...</p>
-            );  
+            );
         }
 
 
